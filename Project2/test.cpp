@@ -13,9 +13,7 @@ int main() {
 	left_LinkBitNode(&node6, &node5);
 	Insert_Node(&node4, 7);
 	InOrder(node4);
-	PreOrder(node1);
-	printf("\n");
-	LevelOrder(node1);
+	
 
 	
 	return 0;
