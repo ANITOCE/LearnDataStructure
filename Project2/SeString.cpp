@@ -155,7 +155,6 @@ int KMP_Index(String Str, String S)
 }
 
 
-
 int* getKMP_next(String S) {
 	int* next = (int*)malloc(sizeof(int) * S.Length);
 	int i = 0, j = 0;                 //i为前缀指针，j为后缀指针，j将不断后移
