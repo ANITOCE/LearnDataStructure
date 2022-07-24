@@ -1,6 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include<stdlib.h>
+#include"LinearQueue.h"
 #define MaxVertexNum 100
 
 //图的邻接矩阵存储
@@ -28,14 +29,14 @@ typedef struct ALGraph {
 };
 
 
-
 MGraph InitGraph(MGraph* G);//初始化邻接矩阵图
 ALGraph InitGraph(ALGraph* G);//初始化邻接表图
 VNode InitVNode(char x);//初始化顶点节点
 void VisitVNode(VNode* x);
 void PrintGraph(ALGraph* G);//以邻接表的形式显示整个图G
 
-void BFS(ALGraph* G);
+void BFSreverse(ALGraph* G);
+void BFS(ALGraph* G, VNode* x);
 void DFS(ALGraph* G);
 
 int getVertexInG(ALGraph* G, VNode* x);
@@ -46,8 +47,8 @@ void InsertVertex(ALGraph* G, VNode* x);//插入节点x
 void DeleteVertex(ALGraph* G, VNode* x);//删除节点x
 void AddEdge(ALGraph* G, VNode* x, VNode* y);//若边(x,y)不存在，则添加
 void RemeoveEdge(ALGraph* G, VNode* x, VNode* y);//若边(x,y)存在，则删除
-VNode FirstNeighbor(ALGraph* G, VNode* x); //返回x的第一个邻接点
-VNode NextNeighbor(ALGraph* G, VNode x, VNode y);//返回除y的下一个邻接点
+VNode* FirstNeighbor(ALGraph* G, VNode* x); //返回x的第一个邻接点
+VNode* NextNeighbor(ALGraph* G, VNode* x, VNode* y);//返回除y的下一个邻接点
 
 int Get_edge_value(ALGraph* G, VNode* x, VNode* y);//获取边(x,y)的权值
 void Set_edge_value(ALGraph* G, VNode* x, VNode* y);//设置边(x,y)的权值

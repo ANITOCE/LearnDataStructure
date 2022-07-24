@@ -1,14 +1,15 @@
 #include "singleLinearList.h"
 
 
-void InitList(LNode* L)
+LNode InitList(LNode* L)
 {
 	L = (LNode*)malloc(sizeof(LNode));
 	if (L == NULL) {
 		printf("ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
 	}	
-	//L->data = 0;
+	L->data = NULL;
 	L->next = NULL;
+	return *L;
 }
 
 LNode InitList()
@@ -16,6 +17,7 @@ LNode InitList()
 	LNode* node = (LNode*)malloc(sizeof(LNode));
 	if (node == NULL)
 		printf("ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
+	node->data = NULL;
 	node->next = NULL;
 	return *node;
 }
@@ -45,7 +47,7 @@ void DeleteNode(LNode* L)
 		//L = NULL;
 	}
 	else {
-		int temp;               //½»»»Ö¸¶¨½ÚµãÓëÏÂÒ»¸ö½ÚµãµÄÊý¾Ý£¬½«nextÖ¸ÏòÏÂÒ»¸ö½ÚµãµÄnext£¬ÊÍ·Å¿Õ¼ä
+		LNodeType temp;               //½»»»Ö¸¶¨½ÚµãÓëÏÂÒ»¸ö½ÚµãµÄÊý¾Ý£¬½«nextÖ¸ÏòÏÂÒ»¸ö½ÚµãµÄnext£¬ÊÍ·Å¿Õ¼ä
 		temp = L->data;
 		L->data = L->next->data;
 		L->next->data = temp;
@@ -56,12 +58,12 @@ void DeleteNode(LNode* L)
 
 }
 
-void ReviseNodeElem(LNode* L, int Elem)
+void ReviseNodeElem(LNode* L, LNodeType Elem)
 {
 	L->data = Elem;
 }
 
-void InsertList(LNode* L, int n, int Elem)
+void InsertList(LNode* L, int n, LNodeType Elem)
 {
 	if (n < 0)
 		printf("²åÈëÎ»ÖÃ´íÎó£¡\n");
@@ -74,7 +76,7 @@ void InsertList(LNode* L, int n, int Elem)
 
 }
 
-bool InsertNextNode(LNode* L, int Elem)
+bool InsertNextNode(LNode* L, LNodeType Elem)
 {
 	LNode* s = (LNode*)malloc(sizeof(LNode));
 	if (s == NULL) {
@@ -89,12 +91,12 @@ bool InsertNextNode(LNode* L, int Elem)
 	return true;
 }
 
-bool InsertPriorNode(LNode* L, int Elem)
+bool InsertPriorNode(LNode* L, LNodeType Elem)
 {
 	LNode* s = (LNode*)malloc(sizeof(LNode));
 	if (s == NULL) {
 		printf("ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
-		return false;
+		return false; 
 	}
 	s->data = Elem;
 	s->next = L->next;
@@ -119,7 +121,7 @@ LNode* GetElem(LNode* L, int n)//????    Í·½ÚµãÎª¿ÕÎÞ·¨·µ»Ø½Úµã£¬Ê¹µÃ²åÈë·¢Éú¿ÕÖ
 	return NULL;
 }
 
-LNode* LocateElem(LNode* L, int Elem)
+LNode* LocateElem(LNode* L, LNodeType Elem)
 {
 	LNode* p = L;
 	while (p != NULL) {

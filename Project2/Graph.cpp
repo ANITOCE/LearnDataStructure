@@ -16,6 +16,11 @@ VNode InitVNode(char x)
 	return *newVertex;
 }
 
+void VisitVNode(VNode* x)
+{
+	printf("%c ", x->data);
+}
+
 void PrintGraph(ALGraph* G)
 {
 	for (int i = 0; i < G->vexNum; i++) {
@@ -26,6 +31,37 @@ void PrintGraph(ALGraph* G)
 			Node = Node->next;
 		}
 		printf("\n");
+	}
+}
+
+bool visited[MaxVertexNum];
+singleListQueue Queue_VNode = InitQueue(&Queue_VNode);
+
+void BFSreverse(ALGraph* G)
+{
+	for (int i = 0; i < G->vexNum; i++) {
+		visited[i] = false;
+	}
+	for (int i = 0; i < G->vexNum; i++) {
+		if (!visited[i])
+			BFS(G, &G->vertices[i]);
+	}
+}
+
+void BFS(ALGraph* G, VNode* x)
+{
+	VisitVNode(x);
+	visited[getVertexInG(G, x)] = true;
+	EnQueue(&Queue_VNode, x->data);
+	while (!isEmpty(&Queue_VNode)) {
+		OutQueue(&Queue_VNode);
+		for (VNode* w = FirstNeighbor(G, x); w != NULL; w = NextNeighbor(G, x, w)) {
+			if (!visited[getVertexInG(G, w)]) {
+				VisitVNode(w);
+				visited[getVertexInG(G, w)] = true;
+				EnQueue(&Queue_VNode, w->data);
+			}
+		}
 	}
 }
 
@@ -86,16 +122,23 @@ void AddEdge(ALGraph* G, VNode* x, VNode* y)
 	}
 }
 
-VNode FirstNeighbor(ALGraph* G, VNode* x)
+VNode* FirstNeighbor(ALGraph* G, VNode* x)
 {
-	return G->vertices[x->first->adjvex];
+	int position = getVertexInG(G, x);
+	if(G->vertices[position].first != nullptr)
+		return &G->vertices[G->vertices[position].first->adjvex];
+	return nullptr;
 }
 
-VNode NextNeighbor(ALGraph* G, VNode* x, VNode* y)
+VNode* NextNeighbor(ALGraph* G, VNode* x, VNode* y)
 {
-	if (equalVertex(&G->vertices[x->first->adjvex], y)) {
-		int nextNode = x->first->next->adjvex;
-		return G->vertices[nextNode];
+	int x_position = getVertexInG(G, x);
+	int y_position = getVertexInG(G, y);
+	ArcNode* Node = G->vertices[x_position].first;
+	while (Node != nullptr) {
+		if (equalVertex(&G->vertices[Node->adjvex], y))
+			return Node->next != nullptr ? &G->vertices[Node->next->adjvex] : NULL;
+		Node = Node->next;
 	}
-	return G->vertices[x->first->adjvex];
+	return NULL;
 }

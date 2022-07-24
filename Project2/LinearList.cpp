@@ -1,14 +1,14 @@
 #include"LinearList.h"
-void swap(int* a, int* b);
+void swap(SeqListType* a, SeqListType* b);
 bool DetectFree(SeqList* L, int n);
 
 
 void InitList(SeqList* L)
 {
-	L->data = (int*)malloc(InitSize*sizeof(SeqList)); //·ÖÅäÁËInitSize(10)¸öSeqListµÄ¿Õ¼ä
+	L->data = (SeqListType*)malloc(InitSize*sizeof(SeqList)); //·ÖÅäÁËInitSize(10)¸öSeqListµÄ¿Õ¼ä
 	L->Length = 0;
 	L->MaxSize = InitSize;
-	printf("³õÊ¼»¯Íê³É£¡\n");
+	//printf("³õÊ¼»¯Íê³É£¡\n");
 }
 
 void DestryList(SeqList* L)
@@ -20,12 +20,21 @@ void DestryList(SeqList* L)
 void PrintList(SeqList L)
 {
 	for (int i = 0; i < L.Length; i++) {
-		printf("%d ", L.data[i]);
+		printf("%c ", L.data[i]);
 	}
 	printf("\n");
 }
 
-void InsertList(SeqList* L, int n, int Elem)
+bool isEmpty(SeqList L)
+{
+	for (int i = 0; i < L.Length; i++) {
+		if (L.data[i] != NULL)
+			return false;
+	}
+	return true;
+}
+
+void InsertList(SeqList* L, int n, SeqListType Elem)
 {
 	if (L->Length == L->MaxSize || n < 0)
 		printf("²åÈëÎ»ÖÃÒç³ö£¡\n");
@@ -37,11 +46,11 @@ void InsertList(SeqList* L, int n, int Elem)
 		}
 		L->data[n] = Elem;
 		L->Length++;
-		printf("%d ²åÈëÍê³É£¡\n", Elem);
+		//printf("%d ²åÈëÍê³É£¡\n", Elem);
 	}
 }
 
-int PositionDeleteElem(SeqList* L, int n)
+SeqListType PositionDeleteElem(SeqList* L, int n)
 {
 	if (PositionElem(L, n)) {
 		for (int i = n; i < L->Length; i++) {
@@ -50,13 +59,13 @@ int PositionDeleteElem(SeqList* L, int n)
 		int Elem = L->data[L->Length];
 		L->data[L->Length] = NULL;
 		L->Length--;
-		printf("µÚ%dÎ»É¾³ý³É¹¦!\n",n);
+		//printf("µÚ%dÎ»É¾³ý³É¹¦!\n",n);
 		return Elem;
 	}
 	return NULL;
 }
 
-void LocateDeleteElem(SeqList* L, int Elem)
+void LocateDeleteElem(SeqList* L, SeqListType Elem)
 {
 	int i;
 	if (LocateElem(L, Elem)) {
@@ -69,7 +78,7 @@ void LocateDeleteElem(SeqList* L, int Elem)
 	}
 }
 
-bool LocateElem(SeqList* L, int Elem)
+bool LocateElem(SeqList* L, SeqListType Elem)
 {
 	for (int i = 0; i < L->Length; i++) {
 		if (L->data[i] == Elem)
@@ -96,8 +105,8 @@ bool PositionElem(SeqList* L, int n)
 
 void IncreaseSize(SeqList* L, int len)
 {
-	int* p = L->data;
-	L->data = (int*)malloc(sizeof(SeqList)*(L->MaxSize + len));
+	SeqListType* p = L->data;
+	L->data = (SeqListType*)malloc(sizeof(SeqList)*(L->MaxSize + len));
 	L->MaxSize += len;
 
 	for (int i = 0; i < L->Length; i++) {
@@ -119,8 +128,8 @@ void ReduceSize(SeqList* L)   //µ¥²âÊÔÏßÐÔ±íµÄ¹¦ÄÜÊ±ÎÞÎÊÌâ  ²âÊÔÊ± Ç¶Ì×½øÏßÐÔ±íÎ
 		else
 			n += 5;
 	}
-	int* p = L->data;
-	L->data = (int*)malloc(L->MaxSize - n);
+	SeqListType* p = L->data;
+	L->data = (SeqListType*)malloc(L->MaxSize - n);
 	L->MaxSize -= n;
 	for (int i = 0; i < L->Length; i++) {
 		L->data[i] = p[i];
@@ -141,8 +150,8 @@ bool DetectFree(SeqList* L, int n)   //¼ì²âµ±Ç°µÄ5¸ö¶îÍâ¿Õ¼äÊÇ·ñ¿ÕÏÐ
 }
 
 
-void swap(int* a, int* b) {
-	int t;
+void swap(SeqListType* a, SeqListType* b) {
+	SeqListType t;
 	t = *a;
 	*a = *b;
 	*b = t;

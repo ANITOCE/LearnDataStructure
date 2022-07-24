@@ -1,4 +1,5 @@
 #include"LinearList.h"   //这个队列是基于动态线性表实现的
+#include"singleLinearList.h"
 
 typedef struct {
 	SeqList* Data;
@@ -6,10 +7,16 @@ typedef struct {
 	int rear;     //队尾  指向的最后一个元素的下一位，相关操作应 - 1
 }SqQueue;
 
-void InitQueue(SqQueue* Q);  //初始化一个队列
+typedef struct {  //这个队列是基于单链表实现的
+	LNode* front;
+	LNode* rear;
+}singleListQueue;
 
-void EnQueue(SqQueue* Q, int Elem);  //将一个元素入队
+SqQueue InitQueue(SqQueue* Q);  //初始化一个队列
+void EnQueue(SqQueue* Q, SeqListType Elem);  //将一个元素入队
+SeqListType OutQueue(SqQueue* Q);  //将队尾元素出队
 
-int OutQueue(SqQueue* Q);  //将队尾元素出队
-
-
+singleListQueue InitQueue(singleListQueue* Q);
+void EnQueue(singleListQueue* Q, LNodeType Elem);
+LNodeType OutQueue(singleListQueue* Q);
+bool isEmpty(singleListQueue* Q);
