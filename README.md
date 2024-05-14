@@ -1,4 +1,4 @@
-# Liu-DataStructure-Learning
+# LearnDataStructure
 ## lzz对数据结构的学习
 
 ### 线性表 LinearList
